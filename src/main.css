@@ -1,0 +1,108 @@
+.tabs {
+  list-style: none;
+  background-color: #CDDC39;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+
+  box-shadow: 0px 3px 8px #B6B6B6
+}
+
+.tabs li {
+  display: inline-block;
+  padding: 15px 10px 15px 10px;
+}
+
+.tabs li:hover {
+  background-color: #03A9F4;
+  cursor: pointer;
+}
+
+.tabs li.active {
+  background-color: #ffffff;
+}
+
+.tabs li.active:hover {
+  cursor: default;
+}
+
+.tabs li a {
+  text-decoration: none;
+  color: #212121;
+}
+
+.tabs li a:hover {
+  cursor: pointer;
+}
+
+.tabs li.active a:hover {
+  cursor: default;
+}
+
+.tab-content {
+  margin: 70px 0 0 0;
+}
+
+.tab-content > div {
+  display: none;
+}
+
+.tab-content div.active {
+  display: block !important;
+}
+
+
+#text-pane textarea {
+  width: 100%;
+}
+
+
+
+#sentences-pane .sentences-options {
+  margin: 0 0 30px 0;
+}
+
+#sentences-pane .sentences-options p {
+  display: inline;
+}
+
+#sentences-pane .ordering-options {
+  display: inline;
+  list-style: none;
+  padding: 0;
+}
+
+#sentences-pane .ordering-options li {
+  display: inline-block;
+  padding: 0 2px 0 2px;
+}
+
+#sentences-pane .sentences-list .paragraph-number {
+  margin: 0 0 0 5px;
+  color: #ffffff;
+}
+
+#sentences-pane .sentence {
+  font-size: 1.5em;
+  margin: 1.5em;
+}
+
+#sentences-pane .sentences-list .sentence:hover .paragraph-number {
+  color: #727272;
+}
+
+
+
+#speed-reading-pane div p {
+  font-size: 1.5em;
+  line-height: 2em;
+  margin: 5px 10px 5px 10px;
+  padding: 10px;
+}
+
+#speed-reading-pane #bottom-mark {
+  margin-bottom: 1000px;
+}
