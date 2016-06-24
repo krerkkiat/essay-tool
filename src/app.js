@@ -106,6 +106,7 @@ var App = React.createClass({
                         onClickReverse={this.handleOnClickReverse}
                         onClickShuffle={this.handleOnClickShuffle}
 
+                        text={this.state.text}
                         sentences={this.state.sentences}
                         activeTabId={this.state.activeTabId} />
                     <SpeedReadingPane

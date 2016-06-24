@@ -4,8 +4,8 @@ var Sentence = React.createClass({
     render: function () {
         return (
             <div className="sentence">
-                <span>{this.props.data.str}</span>
-                <span className="paragraph-number">&para;{this.props.paragraph + 1}</span>
+                <p className="paragraph-number">&para; {this.props.paragraph + 1}</p>
+                <p className="content">{this.props.data.str}</p>
             </div>
         );
     }

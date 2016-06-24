@@ -2,6 +2,7 @@ var React = require('react');
 var classNames = require('classnames');
 
 var Sentence = require('./sentence');
+var Paragraph = require('./paragraph');
 
 var SentencesPane = React.createClass({
     render: function () {
@@ -12,6 +13,10 @@ var SentencesPane = React.createClass({
 
         var sentenceNodes = this.props.sentences.map(function (current, idx, array) {
             return <Sentence key={current.id} data={current.data} paragraph={current.paragraph}/>;
+        });
+
+        var nodes = this.props.text.split('\n').map(function (current, idx) {
+            return <Paragraph key={idx} data={current} />
         });
 
         if (this.props.sentences.length == 0) {
