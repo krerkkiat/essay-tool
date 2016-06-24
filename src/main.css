@@ -115,7 +115,7 @@
 }
 
 #sentences-pane .sentence {
-  margin-top: 1.5em;
+  margin: 2em 0;
 }
 
 #sentences-pane .sentence p.paragraph-number {

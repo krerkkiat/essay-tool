@@ -15,10 +15,6 @@ var SentencesPane = React.createClass({
             return <Sentence key={current.id} data={current.data} paragraph={current.paragraph}/>;
         });
 
-        var nodes = this.props.text.split('\n').map(function (current, idx) {
-            return <Paragraph key={idx} data={current} />
-        });
-
         if (this.props.sentences.length == 0) {
             sentenceNodes = (<div>
                 <h4>No text found, please try to enter or paste some text.</h4>
