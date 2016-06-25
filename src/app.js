@@ -33,7 +33,8 @@ var App = React.createClass({
             text: "",
             wordCount: 0,
             sentences: [],
-            activeTabId: "text"
+            activeTabId: "text",
+            highlighting: "none"
         };
     },
     handleOnTextChange: function (e) {
@@ -74,6 +75,7 @@ var App = React.createClass({
 
         this.setState({ activeTabId: id });
     },
+
     handleOnClickNormal: function (e) {
         var temp = this.state.sentences.sort(function (a, b) {
             return a.id - b.id;
@@ -90,6 +92,12 @@ var App = React.createClass({
         var temp = shuffle(this.state.sentences);
         this.setState({ sentences: temp });
     },
+
+    handleOnClickHighlighting: function (e) {
+        this.setState({
+            highlighting: e.target.value
+        });
+    },
     render: function () {
         return (
             <div id="app">
@@ -105,9 +113,11 @@ var App = React.createClass({
                         onClickNormal={this.handleOnClickNormal}
                         onClickReverse={this.handleOnClickReverse}
                         onClickShuffle={this.handleOnClickShuffle}
+                        onClickHighlighting={this.handleOnClickHighlighting}
 
                         text={this.state.text}
                         sentences={this.state.sentences}
+                        highlighting={this.state.highlighting}
                         activeTabId={this.state.activeTabId} />
                     <SpeedReadingPane
                         text={this.state.text}

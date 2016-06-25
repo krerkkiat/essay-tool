@@ -12,8 +12,15 @@ var SentencesPane = React.createClass({
         });
 
         var sentenceNodes = this.props.sentences.map(function (current, idx, array) {
-            return <Sentence key={current.id} data={current.data} paragraph={current.paragraph}/>;
-        });
+            return (
+                <Sentence
+                    key={current.id}
+                    sentence={current.data}
+                    paragraph={current.paragraph}
+                    highlighting={this.props.highlighting}
+                />
+            );
+        }, this);
 
         if (this.props.sentences.length == 0) {
             sentenceNodes = (<div>
@@ -30,6 +37,15 @@ var SentencesPane = React.createClass({
                         <li><input onClick={this.props.onClickNormal} type="button" value="Normal"></input></li>
                         <li><input onClick={this.props.onClickReverse} type="button" value="Reverse"></input></li>
                         <li><input onClick={this.props.onClickShuffle} type="button" value="Shuffle"></input></li>
+                    </ul>
+                    <br/>
+                    <p>Highlighting options : </p>
+                    <ul className="ordering-options">
+                        <li><input onClick={this.props.onClickHighlighting} type="button" value="None"></input></li>
+                        <li><input onClick={this.props.onClickHighlighting} type="button" value="Noun"></input></li>
+                        <li><input onClick={this.props.onClickHighlighting} type="button" value="Verb"></input></li>
+                        <li><input onClick={this.props.onClickHighlighting} type="button" value="Adjective"></input></li>
+                        <li><input onClick={this.props.onClickHighlighting} type="button" value="Adverb"></input></li>
                     </ul>
                 </div>
                 <div className="sentences-list">

@@ -125,6 +125,17 @@
 
 #sentences-pane .sentence p.content {
   margin-left: 40px;
+  line-height: 1.5em;
+}
+
+#sentences-pane .sentence .term {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#sentences-pane .sentence .term.hilight {
+  font-style: italic;
+  color: blue;
 }
 
 
