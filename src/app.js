@@ -2,6 +2,14 @@ var React = require('react');
 var nlp = require('nlp_compromise');
 var classNames = require('classnames');
 
+var retext = require('retext');
+//var english = require('retext-english');
+var cliches = require('retext-cliches');
+var overuse = require('retext-overuse');
+var equality = require('retext-equality');
+var intensify = require('retext-intensify');
+var report = require('vfile-reporter');
+
 var Tabs = require('./components/tabs');
 var TextPane = require('./components/text-pane');
 var SentencesPane = require('./components/sentences-pane');
@@ -55,6 +63,33 @@ var App = React.createClass({
                 return { id: (i * maxSentences) + idx, paragraph: i, idx: idx, data: current };
             }));
         }
+
+
+        retext()
+            //.use(english)
+            .use(intensify)
+            .use(cliches)
+            .use(equality)
+            .use(overuse)
+            .process(this.state.text, function (err, file) {
+                console.log(file.messages);
+        });
+
+
+        var res = "";
+
+        var pos = require('pos');
+        var words = new pos.Lexer().lex(this.state.text);
+        var taggedWords = new pos.Tagger().tag(words);
+        for (i in taggedWords) {
+            var taggedWord = taggedWords[i];
+            var word = taggedWord[0];
+            var tag = taggedWord[1];
+            res += word + " /" + tag;
+        }
+
+        console.log(res);
+
         
         this.setState({
             sentences: sentences,

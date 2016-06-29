@@ -7,6 +7,7 @@
     "build": "browserify -t [ babelify ] src/main.js -o build/bundle.js && npm run copy",
     "copy": "cp src/index.html build/ && cp src/main.css build/",
     "clean": "rm -rf build/ && mkdir build/ && echo -e \"*\n!.gitignore\" > build/.gitignore",
+    "serve": "python -m http.server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Krerkkiat Chusap",
@@ -19,6 +20,13 @@
     "nlp_compromise": "^6.1.4",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "velocity-react": "^1.1.5"
+    "retext": "^3.0.0",
+    "retext-cliches": "github:dunckr/retext-cliches",
+    "retext-english": "^2.0.0",
+    "retext-equality": "^2.3.2",
+    "retext-intensify": "^2.0.0",
+    "retext-overuse": "^1.0.2",
+    "velocity-react": "^1.1.5",
+    "vfile-reporter": "^2.0.0"
   }
 }
