@@ -12,6 +12,7 @@ var report = require('vfile-reporter');
 
 var Tabs = require('./components/tabs');
 var TextPane = require('./components/text-pane');
+var SuggestionsPane = require('./components/suggestions-pane');
 var SentencesPane = require('./components/sentences-pane');
 var SpeedReadingPane = require('./components/speed-reading-pane');
 var About = require('./components/about');
@@ -49,10 +50,14 @@ var App = React.createClass({
         this.setState({ text: e.target.value });
     },
     handleOnFinishEntering: function () {
-        var paragraphs = this.state.text.split('\n').map(function (current) {
+        // Process the text with the NLP_Compromise library.
+        raw_paragraph = this.state.text.split('\n');
+        var paragraphs = raw_paragraph.map(function (current) {
             return nlp.text(current).sentences;
         });
 
+        // Get the longest paragraph.
+        // This is going to be used to as part of index of each sentence.
         var maxSentences = Math.max.apply(null, paragraphs.map(function (current) {
             return current.length;
         }));
@@ -64,33 +69,49 @@ var App = React.createClass({
             }));
         }
 
-
+        // Process the text with the Retext library.
+        var suggestion_messages = [];
         retext()
-            //.use(english)
             .use(intensify)
             .use(cliches)
             .use(equality)
             .use(overuse)
-            .process(this.state.text, function (err, file) {
+            .process(sentences.map(function (current) {
+                return current.data.str;
+            }).join('\n') , function (err, file) {
                 console.log(file.messages);
+                
+                for (var i in file.messages) {
+                    var position = file.messages[i].name.split('-');
+
+                    var start_sentence = position[0].split(':')[0]
+                    var start_column = position[0].split(':')[1]
+
+                    var end_sentence = position[1].split(':')[0]
+                    var end_column = position[1].split(':')[1]
+
+                    suggestion_messages.push({
+                        startSentence: start_sentence,
+                        endSentence: end_sentence,
+                        startColumn: start_column,
+                        endColumn: end_column,
+                        message: file.messages[i].message,
+                        ruleId: file.messages[i].ruleId,
+                        source: file.messages[i].source
+                    });
+                }
+            }
+        );
+
+        suggestion_messages.map(function (current, idx) {
+            sentences[current.startSentence - 1].data.suggestions = sentences[current.startSentence - 1].data.suggestions || [];
+
+            sentences[current.startSentence - 1].data.suggestions.push(current);
         });
 
-
-        var res = "";
-
-        var pos = require('pos');
-        var words = new pos.Lexer().lex(this.state.text);
-        var taggedWords = new pos.Tagger().tag(words);
-        for (i in taggedWords) {
-            var taggedWord = taggedWords[i];
-            var word = taggedWord[0];
-            var tag = taggedWord[1];
-            res += word + " /" + tag;
-        }
-
-        console.log(res);
-
+        //console.log(suggestion_messages);
         
+        // Set the state.
         this.setState({
             sentences: sentences,
             wordCount: this.state.text.split(' ').length
@@ -98,9 +119,9 @@ var App = React.createClass({
     },
     handleOnClickTab: function (e) {
         var id = "";
-        if (e.target.tagName == "A") {
+        if (e.target.tagName == 'A') {
             id = e.target.id;
-        } else if (e.target.tagName == "LI") {
+        } else if (e.target.tagName == 'LI') {
             id = e.target.children[0].id;
         }
 
@@ -144,6 +165,8 @@ var App = React.createClass({
 
                         text={this.state.text}
                         activeTabId={this.state.activeTabId} />
+                    <SuggestionsPane
+                        activeTabId={this.state.activeTabId}/>
                     <SentencesPane 
                         onClickNormal={this.handleOnClickNormal}
                         onClickReverse={this.handleOnClickReverse}
